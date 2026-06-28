@@ -1,26 +1,92 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@variant dark (&:where(.dark, .dark *));
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-family-inter);
+  --font-serif: var(--font-family-cormorant-garamond);
+  --font-display: var(--font-family-cormorant-garamond);
+  --font-cormorant: var(--font-family-cormorant-garamond);
+  --font-lora: var(--font-family-lora);
+  --font-hand: var(--font-family-caveat);
+  --font-caveat: var(--font-family-caveat);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@theme {
+  --color-background: var(--color-warm-bg);
+  --color-foreground: var(--color-warm-ink);
+  --color-warm-bg: #fbfaf8;
+  --color-warm-paper: #f5f5f0;
+  --color-warm-ink: #3a3a2e;
+  --color-warm-accent: #5a5a40;
+  --color-warm-border: #e2e2da;
+  --color-teal: #0f6e56;
+  --color-sage: #e1f5ee;
+  --color-amber: #fac775;
+}
+
+.dark {
+  --color-warm-bg: #121210;
+  --color-warm-paper: #1c1c18;
+  --color-warm-ink: #deded0;
+  --color-warm-accent: #789c82;
+  --color-warm-border: #2d2d26;
+}
+
+@layer base {
+  body {
+    @apply bg-warm-bg text-warm-ink font-sans transition-all duration-700 ease-in-out selection:bg-warm-accent/20;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .serif {
+    @apply font-serif italic;
+  }
+
+  .card-glass {
+    @apply bg-warm-paper/70 backdrop-blur-xl border border-warm-border shadow-2xl;
+  }
+
+  .reflection-card {
+    @apply bg-warm-paper p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] border border-warm-border shadow-xl;
+  }
+
+  .wax-seal {
+    @apply w-12 h-12 rounded-full shadow-lg relative flex items-center justify-center;
+    background: radial-gradient(circle at 30% 30%, #9b2226, #660708);
+    box-shadow:
+      inset -2px -2px 5px rgba(0, 0, 0, 0.4),
+      2px 2px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .wax-seal::after {
+    content: "C";
+    @apply font-serif text-white/40 text-xl font-bold;
+  }
+
+  .letter-paper {
+    @apply bg-warm-paper shadow-2xl transition-all duration-700 border border-warm-border;
+    background-image: linear-gradient(var(--color-warm-border) 1px, transparent 1px);
+    background-size: 100% 2.8rem;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 30s linear infinite;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
